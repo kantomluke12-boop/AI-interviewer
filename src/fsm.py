@@ -173,8 +173,11 @@ def _handle_budget_phase(
     
     # User provided budget value
     if signals.budget_value is not None:
-        updates['budget_amount'] = signals.budget_value
+        budget = signals.budget_value
+        updates['budget_amount'] = budget
         updates['budget_confirmed'] = True
+        updates['recommended_product'] = _map_budget_to_product(budget)
+        updates['product_pitched'] = True
         updates['phase'] = Phase.RECOMMENDATION
         updates['last_question_type'] = QuestionType.NONE
     elif signals.is_yes or signals.is_no:
@@ -183,6 +186,8 @@ def _handle_budget_phase(
             # Assume lowest safe tier after 2 attempts
             updates['budget_amount'] = 0
             updates['budget_confirmed'] = True
+            updates['recommended_product'] = _map_budget_to_product(0)
+            updates['product_pitched'] = True
             updates['phase'] = Phase.RECOMMENDATION
             updates['last_question_type'] = QuestionType.NONE
         else:

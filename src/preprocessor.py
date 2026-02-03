@@ -22,27 +22,21 @@ from .state import IntentSignals
 # COMPILED REGEX PATTERNS (singleton - compiled once at module load)
 # ============================================================================
 
-# Emoji pattern - covers most common emoji ranges
+# Emoji pattern - simplified to avoid overlapping ranges
+# Uses a more focused approach covering common emoji ranges
 _EMOJI_PATTERN = re.compile(
-    "["
-    "\U0001F600-\U0001F64F"  # emoticons
-    "\U0001F300-\U0001F5FF"  # symbols & pictographs
-    "\U0001F680-\U0001F6FF"  # transport & map symbols
-    "\U0001F1E0-\U0001F1FF"  # flags
-    "\U00002500-\U00002BEF"  # chinese/japanese chars
-    "\U00002702-\U000027B0"
-    "\U000024C2-\U0001F251"
-    "\U0001f926-\U0001f937"
-    "\U00010000-\U0010ffff"
-    "\u2640-\u2642"
-    "\u2600-\u2B55"
-    "\u200d"
-    "\u23cf"
-    "\u23e9"
-    "\u231a"
-    "\ufe0f"  # dingbats
-    "\u3030"
-    "]+",
+    r'['
+    r'\U0001F600-\U0001F64F'  # emoticons
+    r'\U0001F300-\U0001F5FF'  # symbols & pictographs
+    r'\U0001F680-\U0001F6FF'  # transport & map symbols
+    r'\U0001F1E0-\U0001F1FF'  # flags
+    r'\U0001F900-\U0001F9FF'  # supplemental symbols
+    r'\U00002700-\U000027BF'  # dingbats
+    r'\U0000FE00-\U0000FE0F'  # variation selectors
+    r'\U0000200D'              # zero width joiner
+    r'\U00003030'              # wavy dash
+    r'\U0001F926-\U0001F937'  # gestures
+    r']+',
     flags=re.UNICODE
 )
 

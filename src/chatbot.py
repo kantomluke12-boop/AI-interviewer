@@ -14,7 +14,7 @@ The design ensures:
 - User text never directly changes phase
 """
 
-from typing import Optional, Tuple, Dict, Any
+from typing import Optional, Tuple, Dict, Any, List
 from dataclasses import asdict
 import json
 
@@ -51,7 +51,7 @@ class Chatbot:
         """
         self._state = state or create_initial_state()
         self._message_count = 0
-        self._history: list[Dict[str, Any]] = []
+        self._history: List[Dict[str, Any]] = []
     
     @property
     def state(self) -> ConversationState:
@@ -260,7 +260,7 @@ class Chatbot:
             }
         self._history.append(entry)
     
-    def get_history(self) -> list[Dict[str, Any]]:
+    def get_history(self) -> List[Dict[str, Any]]:
         """Get conversation history."""
         return self._history.copy()
     

@@ -45,11 +45,18 @@ class ConversationState:
     
     def __post_init__(self):
         """Validate state consistency."""
-        # Phase should be consistent with confirmation flags
+        # Validate: if hard_exit is True, phase should be TERMINATED
         if self.hard_exit and self.phase != Phase.TERMINATED:
-            self.phase = Phase.TERMINATED
+            raise ValueError(
+                "Invalid state: hard_exit=True requires phase=TERMINATED. "
+                "Use copy_state_with_updates to create consistent states."
+            )
+        # Validate: if soft_exit is True, phase should be PAUSED or TERMINATED
         if self.soft_exit and self.phase not in (Phase.PAUSED, Phase.TERMINATED):
-            self.phase = Phase.PAUSED
+            raise ValueError(
+                "Invalid state: soft_exit=True requires phase=PAUSED or TERMINATED. "
+                "Use copy_state_with_updates to create consistent states."
+            )
 
 
 @dataclass
